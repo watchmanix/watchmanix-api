@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "watchmanix-backend"
+version = "0.1.0"
+description = ""
+authors = ["Roman Sotnikov <axeman.ofic@gmail.com>"]
+readme = "README.md"
+packages = [{include = "src", from = ""}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.89.1"
+uvicorn = {extras = ["standart"], version = "^0.20.0"}
+gunicorn = "^20.1.0"
+pydantic = {extras = ["dotenv"], version = "^1.10.4"}
+aiosqlite = "^0.18.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+pre-commit = "^3.0.2"
+commitizen = "^2.40.0"
+typer = {extras = ["all"], version = "^0.7.0"}
+ruff = "^0.0.243"
+pyright = "^1.1.293"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.1"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.0.8"
+
+[tool.poetry.scripts]
+fastapi-cli = "cli.main:app"
+dev = "scripts.main:run_dev"
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+  "src/config/application.py",
+  "src/__version__.py",
+  "pyproject.toml:^version",
+]
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ["tests", "__init__.py"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
